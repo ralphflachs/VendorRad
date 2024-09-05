@@ -42,5 +42,24 @@
                 <Button Name="SaveCustomerButton" Content="Save Customer" Width="120" Margin="10,10,0,0" HorizontalAlignment="Left"/>
             </StackPanel>
         </GroupBox>
+
+        <!-- Vendor Details Section -->
+        <GroupBox Grid.Row="1" Grid.Column="1" Header="Vendor Details" Margin="0,10,0,10">
+            <StackPanel>
+                <Label Content="Name:"/>
+                <TextBox Name="VendorName" Width="300"/>
+
+                <Label Content="Company:"/>
+                <TextBox Name="VendorCompany" Width="300"/>
+
+                <Label Content="Phone Number:"/>
+                <TextBox Name="VendorPhoneNumber" Width="300"/>
+
+                <Label Content="Address:"/>
+                <TextBox Name="VendorAddress" Width="300"/>
+
+                <Button Name="SaveVendorButton" Content="Save Vendor" Width="120" Margin="10,10,0,0" HorizontalAlignment="Left"/>
+            </StackPanel>
+        </GroupBox>
     </Grid>
 </Window>
