@@ -7,6 +7,16 @@
         mc:Ignorable="d"
         Title="VendorRad - Contact Management System" Height="450" Width="800">
     <Grid>
+        <!-- Define UI Layout -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
     </Grid>
 </Window>
