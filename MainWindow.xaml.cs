@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace VendorRad
 {
@@ -16,9 +17,25 @@ namespace VendorRad
     /// </summary>
     public partial class MainWindow : Window
     {
+        private DispatcherTimer timer;
+
         public MainWindow()
         {
             InitializeComponent();
+            StartClock();
+        }
+
+        private void StartClock()
+        {
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += Timer_Tick;
+            timer.Start();
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            ClockDisplay.Text = DateTime.Now.ToString("HH:mm:ss");
         }
     }
 }
