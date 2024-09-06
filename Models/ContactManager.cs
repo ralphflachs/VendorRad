@@ -10,40 +10,41 @@ namespace VendorRad.Models
 {
     public class ContactManager
     {
-        private List<Contact> contacts;
         private readonly string filePath = "contacts.json";
 
-        public ContactManager()
-        {
-            // Load contacts from file if exists, otherwise initialize an empty list
-            contacts = File.Exists(filePath) ? LoadContacts() : new List<Contact>();            
-        }
-
-        // Save a new contact (either Customer or Vendor)
+        // Save contact with file locking
         public void SaveContact(Contact contact)
         {
-            contacts.Add(contact);
-            SaveContacts();
+            lock (filePath)
+            {
+                var contacts = LoadContacts();
+                contacts.Add(contact);
+                SaveContacts(contacts);
+            }
         }
 
-        // Retrieve all contacts
-        public List<Contact> GetAllContacts()
-        {
-            return contacts;
-        }
-
-        // Save the contacts list to a JSON file
-        private void SaveContacts()
-        {
-            var json = JsonSerializer.Serialize(contacts, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(filePath, json);
-        }
-
-        // Load contacts from the JSON file
         private List<Contact> LoadContacts()
         {
-            var json = File.ReadAllText(filePath);
-            return JsonSerializer.Deserialize<List<Contact>>(json);
+            lock (filePath)
+            {
+                if (!File.Exists(filePath))
+                {
+                    return new List<Contact>();
+                }
+
+                var json = File.ReadAllText(filePath);
+                return JsonSerializer.Deserialize<List<Contact>>(json);
+            }
+        }
+
+        private void SaveContacts(List<Contact> contacts)
+        {
+            var json = JsonSerializer.Serialize(contacts, new JsonSerializerOptions { WriteIndented = true });
+            lock (filePath)
+            {
+                File.WriteAllText(filePath, json);
+            }
         }
     }
+
 }
