@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using VendorRad.Models;
 
 namespace VendorRad
 {
@@ -17,12 +18,68 @@ namespace VendorRad
     /// </summary>
     public partial class MainWindow : Window
     {
-        private DispatcherTimer timer;
+        private DispatcherTimer? timer;
+        private ContactManager contactManager;
 
         public MainWindow()
         {
             InitializeComponent();
+            contactManager = new ContactManager();
             StartClock();
+        }
+
+        // Event handler for saving customer contact
+        private void SaveCustomerButton_Click(object sender, RoutedEventArgs e)
+        {
+            var customer = new Customer
+            {
+                Name = CustomerName.Text,
+                Company = CustomerCompany.Text,
+                PhoneNumber = CustomerPhoneNumber.Text,
+                Address = CustomerAddress.Text,
+                SalesNotes = CustomerSalesNotes.Text
+            };
+
+            contactManager.SaveContact(customer);
+
+            MessageBox.Show("Customer saved successfully!");
+
+            ClearCustomerFields();
+        }
+
+        // Event handler for saving vendor contact
+        private void SaveVendorButton_Click(object sender, RoutedEventArgs e)
+        {
+            var vendor = new Vendor
+            {
+                Name = VendorName.Text,
+                Company = VendorCompany.Text,
+                PhoneNumber = VendorPhoneNumber.Text,
+                Address = VendorAddress.Text
+            };
+
+            contactManager.SaveContact(vendor);
+
+            MessageBox.Show("Vendor saved successfully!");
+
+            ClearVendorFields();
+        }
+
+        private void ClearCustomerFields()
+        {
+            CustomerName.Clear();
+            CustomerCompany.Clear();
+            CustomerPhoneNumber.Clear();
+            CustomerAddress.Clear();
+            CustomerSalesNotes.Clear();
+        }
+
+        private void ClearVendorFields()
+        {
+            VendorName.Clear();
+            VendorCompany.Clear();
+            VendorPhoneNumber.Clear();
+            VendorAddress.Clear();
         }
 
         private void StartClock()
