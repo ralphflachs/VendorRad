@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -21,20 +20,11 @@ namespace VendorRad.Models
                 var existingContact = contacts.FirstOrDefault(c => c.Name == contact.Name || c.PhoneNumber == contact.PhoneNumber);
 
                 if (existingContact != null)
-                {
-                    // Update existing contact details
-                    existingContact.Company = contact.Company;
-                    existingContact.Address = contact.Address;
-                    existingContact.PhoneNumber = contact.PhoneNumber;
-
-                    if (existingContact is Customer existingCustomer && contact is Customer newCustomer)
-                    {
-                        existingCustomer.SalesNotes = newCustomer.SalesNotes; // Update Customer-specific field
-                    }
+                {                    
+                    existingContact.Update(contact);
                 }
                 else
-                {
-                    // If contact doesn't exist, add it as a new contact
+                {                    
                     contacts.Add(contact);
                 }
 
