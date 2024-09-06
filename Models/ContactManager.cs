@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -31,6 +32,12 @@ namespace VendorRad.Models
                 // Save updated contact list
                 SaveContacts(contacts);
             }
+        }
+
+        internal IEnumerable GetAllContacts()
+        {
+            Contact[] contacts = LoadContacts().ToArray();
+            return contacts;
         }
 
         private List<Contact> LoadContacts()

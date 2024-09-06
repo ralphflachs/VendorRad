@@ -25,7 +25,16 @@ namespace VendorRad
         {
             InitializeComponent();
             contactManager = new ContactManager();
+            
+            LoadContacts();
             StartClock();
+        }
+
+        // Load contacts and display them in the ListView
+        private void LoadContacts()
+        {
+            var contacts = contactManager.GetAllContacts();
+            ContactListView.ItemsSource = contacts; // Bind contacts to ListView
         }
 
         // Event handler for saving customer contact
