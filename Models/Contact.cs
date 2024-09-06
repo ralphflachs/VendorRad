@@ -18,6 +18,7 @@ namespace VendorRad.Models
         public virtual void Update(Contact newContact)
         {
             // Update common fields
+            Name = newContact.Name;
             Company = newContact.Company;
             PhoneNumber = newContact.PhoneNumber;
             Address = newContact.Address;
