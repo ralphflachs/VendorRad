@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VendorRad"
         mc:Ignorable="d"
-        Title="VendorRad - Contact Management System" Height="450" Width="800">
+        Title="VendorRad - Contact Management System" Height="600" Width="800">
     <Grid>
         <!-- Define UI Layout -->
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="2*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -67,5 +68,19 @@
             <TextBlock Text="Current Time:" FontSize="16"/>
             <TextBlock Name="ClockDisplay" FontSize="16" FontWeight="Bold" Margin="10,0,0,0"/>
         </StackPanel>
+
+        <!-- Contact List Display -->
+        <GroupBox Grid.Row="2" Grid.ColumnSpan="2" Header="Contacts" Margin="10,10,10,10">
+            <ListView Name="ContactListView" >
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="150"/>
+                        <GridViewColumn Header="Company" DisplayMemberBinding="{Binding Company}" Width="150"/>
+                        <GridViewColumn Header="Phone" DisplayMemberBinding="{Binding PhoneNumber}" Width="100"/>
+                        <GridViewColumn Header="Address" DisplayMemberBinding="{Binding Address}" Width="150"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </GroupBox>
     </Grid>
 </Window>
