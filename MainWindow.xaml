@@ -58,7 +58,7 @@
                 <Label Content="Address:"/>
                 <TextBox Name="VendorAddress" Width="300"/>
 
-                <Button Name="SaveVendorButton" Content="Save Vendor" Width="120" Margin="10,10,0,0" HorizontalAlignment="Left"/>
+                <Button Name="SaveVendorButton" Content="Save Vendor" Click="SaveVendorButton_Click" Width="120" Margin="10,10,0,0" HorizontalAlignment="Left"/>
             </StackPanel>
         </GroupBox>
 
