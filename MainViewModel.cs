@@ -5,7 +5,6 @@ namespace VendorRad.ViewModels
 {
     public class MainViewModel
     {
-        // Expose ObservableCollection for binding
         public ObservableCollection<Contact> Contacts { get; set; }
 
         private readonly ContactManager contactManager;
@@ -30,7 +29,6 @@ namespace VendorRad.ViewModels
                 Contacts.Add(contact);
             }
 
-            // Save updated contacts via the ContactManager
             contactManager.SaveContacts([.. Contacts]);
         }
     }

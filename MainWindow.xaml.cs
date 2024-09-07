@@ -19,13 +19,14 @@ namespace VendorRad
     /// </summary>
     public partial class MainWindow : Window
     {
-        private DispatcherTimer? timer;
+        private readonly DispatcherTimer timer;
         private readonly MainViewModel viewModel;
 
         public MainWindow()
         {
             InitializeComponent();
             viewModel = new MainViewModel();
+            timer = new DispatcherTimer();
             DataContext = viewModel;
             StartClock();
         }
@@ -81,14 +82,13 @@ namespace VendorRad
         }
 
         private void StartClock()
-        {
-            timer = new DispatcherTimer();
+        {            
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
             timer.Start();
         }
 
-        private void Timer_Tick(object sender, EventArgs e)
+        private void Timer_Tick(object? sender, EventArgs e)
         {
             ClockDisplay.Text = DateTime.Now.ToString("HH:mm:ss");
         }
