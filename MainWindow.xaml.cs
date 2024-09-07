@@ -10,6 +10,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using VendorRad.Models;
+using VendorRad.ViewModels;
 
 namespace VendorRad
 {
@@ -19,14 +20,13 @@ namespace VendorRad
     public partial class MainWindow : Window
     {
         private DispatcherTimer? timer;
-        private ContactManager contactManager;
+        private readonly MainViewModel viewModel;
 
         public MainWindow()
         {
             InitializeComponent();
-            contactManager = new ContactManager();
-            DataContext = contactManager; // Set DataContext for binding
-
+            viewModel = new MainViewModel();
+            DataContext = viewModel;
             StartClock();
         }
 
@@ -42,10 +42,8 @@ namespace VendorRad
                 SalesNotes = CustomerSalesNotes.Text
             };
 
-            contactManager.SaveContact(customer);
-
+            viewModel.AddOrUpdateContact(customer);
             MessageBox.Show("Customer saved successfully!");
-
             ClearCustomerFields();
         }
 
@@ -60,10 +58,8 @@ namespace VendorRad
                 Address = VendorAddress.Text
             };
 
-            contactManager.SaveContact(vendor);
-
+            viewModel.AddOrUpdateContact(vendor);
             MessageBox.Show("Vendor saved successfully!");
-
             ClearVendorFields();
         }
 

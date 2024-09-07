@@ -1,69 +1,31 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 
 namespace VendorRad.Models
 {
     public class ContactManager
     {
-        public ObservableCollection<Contact> Contacts { get; private set; } = new ObservableCollection<Contact>();
-
         private readonly string filePath = "contacts.json";
 
-        public ContactManager()
+        // Load contacts from the file
+        public List<Contact> LoadContacts()
         {
-            LoadContacts();
-        }
-
-        // Save contact (update if exists, add if new)
-        public void SaveContact(Contact contact)
-        {
-            // Load contacts from file in case it was updated by another instance
-            this.LoadContacts();
-            var existingContact = Contacts.FirstOrDefault(c => c.Name == contact.Name || c.PhoneNumber == contact.PhoneNumber);
-
-            if (existingContact != null)
+            if (!File.Exists(filePath))
             {
-                // Update the existing contact
-                existingContact.Update(contact);
-            }
-            else
-            {
-                // Add the new contact
-                Contacts.Add(contact);
+                return new List<Contact>();
             }
 
-            // Save the updated contacts to file
-            SaveContacts();
+            var json = File.ReadAllText(filePath);
+            return JsonSerializer.Deserialize<List<Contact>>(json) ?? new List<Contact>();
         }
 
-        // Load contacts from the file and populate the ObservableCollection
-        private void LoadContacts()
+        // Save contacts to the file
+        public void SaveContacts(List<Contact> contacts)
         {
-            lock (filePath)
-            {
-                if (!File.Exists(filePath))
-                {
-                    return;
-                }
+            var json = JsonSerializer.Serialize(contacts, new JsonSerializerOptions { WriteIndented = true });
 
-                var json = File.ReadAllText(filePath);
-                var contactsFromFile = JsonSerializer.Deserialize<ObservableCollection<Contact>>(json);
-
-                if (contactsFromFile != null)
-                {
-                    Contacts.Clear();
-                    foreach (var contact in contactsFromFile)
-                    {
-                        Contacts.Add(contact);
-                    }
-                }
-            }
-        }
-
-        private void SaveContacts()
-        {
-            var json = JsonSerializer.Serialize(Contacts, new JsonSerializerOptions { WriteIndented = true });
             lock (filePath)
             {
                 File.WriteAllText(filePath, json);
