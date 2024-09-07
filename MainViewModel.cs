@@ -10,25 +10,16 @@ namespace VendorRad.ViewModels
         private readonly ContactManager contactManager;
 
         public MainViewModel()
-        {            
-            contactManager = new ContactManager();         
+        {
+            contactManager = new ContactManager();
             var contactsFromManager = contactManager.LoadContacts();
             Contacts = new ObservableCollection<Contact>(contactsFromManager);
         }
 
-        // Add or update contact in the ObservableCollection
-        public void AddOrUpdateContact(Contact contact)
+        // Add contact in the ObservableCollection
+        public void AddContact(Contact contact)
         {
-            var existingContact = Contacts.FirstOrDefault(c => c.Name == contact.Name || c.PhoneNumber == contact.PhoneNumber);
-            if (existingContact != null)
-            {
-                existingContact.Update(contact);
-            }
-            else
-            {
-                Contacts.Add(contact);
-            }
-
+            Contacts.Add(contact);
             contactManager.SaveContacts([.. Contacts]);
         }
     }

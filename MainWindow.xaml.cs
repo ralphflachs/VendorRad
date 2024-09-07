@@ -43,7 +43,7 @@ namespace VendorRad
                 SalesNotes = CustomerSalesNotes.Text
             };
 
-            viewModel.AddOrUpdateContact(customer);
+            viewModel.AddContact(customer);
             MessageBox.Show("Customer saved successfully!");
             ClearCustomerFields();
         }
@@ -59,7 +59,7 @@ namespace VendorRad
                 Address = VendorAddress.Text
             };
 
-            viewModel.AddOrUpdateContact(vendor);
+            viewModel.AddContact(vendor);
             MessageBox.Show("Vendor saved successfully!");
             ClearVendorFields();
         }
