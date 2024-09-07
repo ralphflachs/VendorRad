@@ -1,22 +1,12 @@
 ﻿using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 using VendorRad.Models;
 using VendorRad.ViewModels;
 
 namespace VendorRad
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private readonly DispatcherTimer timer;
@@ -26,8 +16,8 @@ namespace VendorRad
         {
             InitializeComponent();
             viewModel = new MainViewModel();
-            timer = new DispatcherTimer();
             DataContext = viewModel;
+            timer = new DispatcherTimer();
             StartClock();
         }
 
@@ -59,11 +49,35 @@ namespace VendorRad
                 Address = VendorAddress.Text
             };
 
-            viewModel.AddContact(vendor);
-            MessageBox.Show("Vendor saved successfully!");
-            ClearVendorFields();
+            // Manually ask for vendor code, as it needs to be linked with the master vendor list
+            string vendorCode = PromptForVendorCode();
+
+            bool success = viewModel.AddVendor(vendor, vendor.Company, vendorCode);
+            if (success)
+            {
+                MessageBox.Show("Vendor saved successfully!");
+                ClearVendorFields();
+            }
+            else
+            {
+                MessageBox.Show("Failed to save vendor. The vendor may already exist.");
+            }
         }
 
+        // Method to simulate asking for a vendor code (could be done with a dialog in a real app)
+        private string PromptForVendorCode()
+        {
+            // For simplicity, we'll just return a placeholder code
+            return VendorCodeInputDialog(); // You can create a pop-up input dialog or keep it simple.
+        }
+
+        private string VendorCodeInputDialog()
+        {
+            // Simulate vendor code input for now
+            return "V001"; // Placeholder, this can be customized to get actual input.
+        }
+
+        // Clear customer input fields
         private void ClearCustomerFields()
         {
             CustomerName.Clear();
@@ -73,6 +87,7 @@ namespace VendorRad
             CustomerSalesNotes.Clear();
         }
 
+        // Clear vendor input fields
         private void ClearVendorFields()
         {
             VendorName.Clear();
@@ -81,8 +96,9 @@ namespace VendorRad
             VendorAddress.Clear();
         }
 
+        // Start the clock display
         private void StartClock()
-        {            
+        {
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
             timer.Start();

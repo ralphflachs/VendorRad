@@ -8,7 +8,7 @@ namespace VendorRad.Models
 {
     public class Vendor : Contact
     {
-        public required MasterVendor MasterVendor { get; set; }
+        public MasterVendor? MasterVendor { get; set; }
     }
 
 }
