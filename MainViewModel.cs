@@ -40,7 +40,7 @@ namespace VendorRad.ViewModels
                 // If the company doesn't exist, add it to the master vendor list
                 masterVendor = new MasterVendor { CompanyName = companyName, VendorCode = vendorCode };
                 MasterVendors.Add(masterVendor);
-                contactManager.SaveMasterVendors(MasterVendors.ToList());
+                contactManager.SaveMasterVendors([.. MasterVendors]);
             }
 
             // Link the vendor contact to the corresponding MasterVendor
