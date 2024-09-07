@@ -13,15 +13,5 @@ namespace VendorRad.Models
         public required string Company { get; set; }
         public required string PhoneNumber { get; set; }
         public required string Address { get; set; }
-
-        // Template method for updating common contact fields
-        public virtual void Update(Contact newContact)
-        {
-            // Update common fields
-            Name = newContact.Name;
-            Company = newContact.Company;
-            PhoneNumber = newContact.PhoneNumber;
-            Address = newContact.Address;
-        }
     }
 }
