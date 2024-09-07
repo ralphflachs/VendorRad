@@ -30,12 +30,6 @@ namespace VendorRad
             StartClock();
         }
 
-        // Load contacts and display them in the ListView
-        private void LoadContacts()
-        {            
-            ContactListView.ItemsSource = contactManager.Contacts;
-        }
-
         // Event handler for saving customer contact
         private void SaveCustomerButton_Click(object sender, RoutedEventArgs e)
         {
