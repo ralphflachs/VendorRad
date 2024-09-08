@@ -89,7 +89,7 @@
         </GroupBox>
 
         <!-- Master Vendor List Display -->
-        <GroupBox Grid.Row="2" Grid.Column="1" Header="Master Vendors" Margin="10,10,10,10">
+        <GroupBox Grid.Row="2" Grid.Column="1" Header="Vendor Companies" Margin="10,10,10,10">
             <ListView Name="MasterVendorListView" ItemsSource="{Binding MasterVendors}">
                 <ListView.View>
                     <GridView>
