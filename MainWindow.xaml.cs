@@ -45,9 +45,16 @@ namespace VendorRad
 
             if (!string.IsNullOrEmpty(companyName) && !string.IsNullOrEmpty(vendorCode))
             {
-                // Assuming ViewModel method to add new master vendor
-                ((MainViewModel)DataContext).AddNewMasterVendor(companyName, vendorCode);
-                MessageBox.Show("New master vendor added successfully!");
+                var masterVendor = viewModel.GetMasterVendor(companyName);
+                if (masterVendor == null)
+                {
+                    viewModel.AddNewMasterVendor(companyName, vendorCode);
+                    MessageBox.Show("New master vendor added successfully!");
+                }
+                else
+                {
+                    MessageBox.Show("Master vendor already exists.");
+                }
             }
             else
             {

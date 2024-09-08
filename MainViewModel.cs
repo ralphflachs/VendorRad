@@ -53,7 +53,7 @@ namespace VendorRad.ViewModels
         {
             var newMasterVendor = new MasterVendor { CompanyName = companyName, VendorCode = vendorCode };
             MasterVendors.Add(newMasterVendor);
-            // Optionally, implement saving to a database or service here
+            contactManager.SaveMasterVendors([.. MasterVendors]);
         }
     }
 }
