@@ -44,9 +44,8 @@ namespace VendorRad
             var vendorCode = NewMasterVendorCode.Text;
 
             if (!string.IsNullOrEmpty(companyName) && !string.IsNullOrEmpty(vendorCode))
-            {
-                var masterVendor = viewModel.GetMasterVendor(companyName);
-                if (masterVendor == null)
+            {                
+                if (!viewModel.IsMasterVendorExists(companyName))
                 {
                     viewModel.AddNewMasterVendor(companyName, vendorCode);
                     MessageBox.Show("New master vendor added successfully!");
@@ -65,18 +64,18 @@ namespace VendorRad
         // Event handler for saving vendor contact
         private void SaveVendorButton_Click(object sender, RoutedEventArgs e)
         {
-            /*var masterVendor = viewModel.GetMasterVendor(VendorCompany.Text);
+            var masterVendor = VendorCompanyDropdown.SelectedItem as MasterVendor;
+
             if (masterVendor == null)
             {
-                // Manually ask for vendor code, as it needs to be linked with the master vendor list
-                string vendorCode = PromptForVendorCode();
-                masterVendor = viewModel.AddVendor(VendorCompany.Text, vendorCode);
+                MessageBox.Show("Please select a master vendor.");
+                return; // Exit the method if no vendor is selected
             }
 
             var vendor = new Vendor
             {
                 Name = VendorName.Text,
-                Company = VendorCompany.Text,
+                Company = masterVendor.CompanyName,
                 PhoneNumber = VendorPhoneNumber.Text,
                 Address = VendorAddress.Text,
                 MasterVendor = masterVendor
@@ -85,7 +84,7 @@ namespace VendorRad
             viewModel.AddContact(vendor);
 
             MessageBox.Show("Vendor saved successfully!");
-            ClearVendorFields();*/
+            ClearVendorFields();
         }
 
         // Method to simulate asking for a vendor code (could be done with a dialog in a real app)

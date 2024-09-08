@@ -28,7 +28,7 @@ namespace VendorRad.ViewModels
             Contacts.Add(contact);
             contactManager.SaveContacts([.. Contacts]);
         }
-
+        public bool IsMasterVendorExists(string companyName) => MasterVendors.Any(mv => mv.CompanyName == companyName);
         // Get the master vendor from the master vendor list, null if not found
         public MasterVendor? GetMasterVendor(string companyName) => MasterVendors.FirstOrDefault(mv => mv.CompanyName == companyName);
 
