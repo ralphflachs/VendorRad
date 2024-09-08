@@ -22,6 +22,7 @@
         <!-- Title -->
         <TextBlock Grid.Row="0" Grid.Column="0" Text="VendorRad - Contact Management System" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,20"/>
 
+        <!-- Tab Control for Customer and Vendor contacts -->
         <TabControl Grid.Row="1" Grid.ColumnSpan="1">
             <TabItem Header="Customer">
                 <StackPanel Margin="10">
