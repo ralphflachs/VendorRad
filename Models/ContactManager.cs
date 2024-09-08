@@ -16,16 +16,32 @@ namespace VendorRad.Models
             LoadMasterVendors();
         }
 
-        // Load contacts from the file
+        // Load or initialize contacts from the file
         public List<Contact> LoadContacts()
         {
-            if (!File.Exists(contactsFilePath))
+            if (File.Exists(contactsFilePath))
             {
-                return new List<Contact>();
+                var json = File.ReadAllText(contactsFilePath);
+                return JsonSerializer.Deserialize<List<Contact>>(json) ?? new List<Contact>();
             }
+            else
+            {
+                // Initialize with default contacts if the file doesn't exist
+                var initialContacts = new List<Contact>
+                {
+                    // Customers
+                    new Customer { Name = "Alice Johnson", Company = "AJ Solutions", PhoneNumber = "+1234567890", Address = "1234 Elm St", SalesNotes = "Important client" },
+                    new Customer { Name = "Bob Smith", Company = "Smith Consulting", PhoneNumber = "+0987654321", Address = "5678 Oak St", SalesNotes = "Prefers email contact" },
+                    new Customer { Name = "Charlie Chaplin", Company = "Chaplin Productions", PhoneNumber = "+1122334455", Address = "910 Pine St", SalesNotes = "Enjoys timely deliveries" },
+                    // Vendors
+                    new Vendor { Name = "Diana Reeves", Company = "ACME Acids", PhoneNumber = "+12025550101", Address = "2345 Maple St", MasterVendor = new MasterVendor { CompanyName = "ACME Acids", VendorCode = "A001" } },
+                    new Vendor { Name = "Evan Wright", Company = "Berenstain Biology", PhoneNumber = "+12025550102", Address = "3456 Birch St", MasterVendor = new MasterVendor { CompanyName = "Berenstain Biology", VendorCode = "A002" } },
+                    new Vendor { Name = "Fiona Graham", Company = "Flick’s Fluidics", PhoneNumber = "+12025550103", Address = "4567 Cedar St", MasterVendor = new MasterVendor { CompanyName = "Flick’s Fluidics", VendorCode = "A003" } }
+                };
 
-            var json = File.ReadAllText(contactsFilePath);
-            return JsonSerializer.Deserialize<List<Contact>>(json) ?? new List<Contact>();
+                SaveContacts(initialContacts);
+                return initialContacts;
+            }
         }
 
         // Save contacts to the file
