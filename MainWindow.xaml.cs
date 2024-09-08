@@ -89,16 +89,19 @@ namespace VendorRad
                 MessageBox.Show("Both company name and vendor code must be entered.");
                 return;
             }
-
-            if (!viewModel.IsMasterVendorExists(companyName))
-            {
-                viewModel.AddNewMasterVendor(companyName, vendorCode);
-                MessageBox.Show("New master vendor added successfully!");
-            }
-            else
+            else if (viewModel.IsMasterVendorExists(companyName))
             {
                 MessageBox.Show("Master vendor already exists.");
+                return;
             }
+            else if (viewModel.IsMasterVendorCodeExists(vendorCode))
+            {
+                MessageBox.Show("Vendor code already exists.");
+                return;
+            }
+
+            viewModel.AddNewMasterVendor(companyName, vendorCode);
+            MessageBox.Show("New master vendor added successfully!");
         }
 
         // Clear the customer fields
