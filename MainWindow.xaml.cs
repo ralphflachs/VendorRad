@@ -21,21 +21,67 @@ namespace VendorRad
             StartClock();
         }
 
-        // Event handler for saving customer contact
-        private void SaveCustomerButton_Click(object sender, RoutedEventArgs e)
+        private void ToggleContactType_Checked(object sender, RoutedEventArgs e)
         {
-            var customer = new Customer
-            {
-                Name = CustomerName.Text,
-                Company = CustomerCompany.Text,
-                PhoneNumber = CustomerPhoneNumber.Text,
-                Address = CustomerAddress.Text,
-                SalesNotes = CustomerSalesNotes.Text
-            };
+            if (VendorSpecificFields == null)
+                return; // Exit if controls are not initialized
 
-            viewModel.AddContact(customer);
-            MessageBox.Show("Customer saved successfully!");
-            ClearCustomerFields();
+            if (ToggleContactType.IsChecked == true)
+            {
+                ToggleContactType.Content = "Customer";
+                VendorSpecificFields.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                ToggleContactType.Content = "Vendor";
+                VendorSpecificFields.Visibility = Visibility.Visible;
+            }
+        }
+
+        // Event handler for saving contact
+        private void SaveContactButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ToggleContactType.IsChecked == true)
+            {
+                // Save as Customer
+                var customer = new Customer
+                {
+                    Name = ContactName.Text,
+                    Company = ContactCompany.Text,
+                    PhoneNumber = ContactPhoneNumber.Text,
+                    Address = ContactAddress.Text,
+                    SalesNotes = ContactNotes.Text
+                };
+
+                viewModel.AddContact(customer);
+                MessageBox.Show("Customer saved successfully!");
+                ClearContactFields();
+            }
+            else
+            {
+                var masterVendor = VendorCompanyDropdown.SelectedItem as MasterVendor;
+
+                if (masterVendor == null)
+                {
+                    MessageBox.Show("Please select a master vendor.");
+                    return; // Exit the method if no vendor is selected
+                }
+
+                var vendor = new Vendor
+                {
+                    Name = ContactName.Text,
+                    Company = masterVendor.CompanyName,
+                    PhoneNumber = ContactName.Text,
+                    Address = ContactAddress.Text,
+                    MasterVendor = masterVendor
+                };
+
+                viewModel.AddContact(vendor);
+
+                MessageBox.Show("Vendor saved successfully!");
+                ClearContactFields();
+            }
+            MessageBox.Show("Contact saved successfully!");
         }
 
         private void AddMasterVendorButton_Click(object sender, RoutedEventArgs e)
@@ -44,7 +90,7 @@ namespace VendorRad
             var vendorCode = NewMasterVendorCode.Text;
 
             if (!string.IsNullOrEmpty(companyName) && !string.IsNullOrEmpty(vendorCode))
-            {                
+            {
                 if (!viewModel.IsMasterVendorExists(companyName))
                 {
                     viewModel.AddNewMasterVendor(companyName, vendorCode);
@@ -61,62 +107,14 @@ namespace VendorRad
             }
         }
 
-        // Event handler for saving vendor contact
-        private void SaveVendorButton_Click(object sender, RoutedEventArgs e)
+        // Clear contact input fields
+        private void ClearContactFields()
         {
-            var masterVendor = VendorCompanyDropdown.SelectedItem as MasterVendor;
-
-            if (masterVendor == null)
-            {
-                MessageBox.Show("Please select a master vendor.");
-                return; // Exit the method if no vendor is selected
-            }
-
-            var vendor = new Vendor
-            {
-                Name = VendorName.Text,
-                Company = masterVendor.CompanyName,
-                PhoneNumber = VendorPhoneNumber.Text,
-                Address = VendorAddress.Text,
-                MasterVendor = masterVendor
-            };
-
-            viewModel.AddContact(vendor);
-
-            MessageBox.Show("Vendor saved successfully!");
-            ClearVendorFields();
-        }
-
-        // Method to simulate asking for a vendor code (could be done with a dialog in a real app)
-        private string PromptForVendorCode()
-        {
-            // For simplicity, we'll just return a placeholder code
-            return VendorCodeInputDialog(); // You can create a pop-up input dialog or keep it simple.
-        }
-
-        private string VendorCodeInputDialog()
-        {
-            // Simulate vendor code input for now
-            return "V001"; // Placeholder, this can be customized to get actual input.
-        }
-
-        // Clear customer input fields
-        private void ClearCustomerFields()
-        {
-            CustomerName.Clear();
-            CustomerCompany.Clear();
-            CustomerPhoneNumber.Clear();
-            CustomerAddress.Clear();
-            CustomerSalesNotes.Clear();
-        }
-
-        // Clear vendor input fields
-        private void ClearVendorFields()
-        {
-            VendorName.Clear();
-            //VendorCompany.Clear();
-            VendorPhoneNumber.Clear();
-            VendorAddress.Clear();
+            ContactName.Clear();
+            ContactCompany.Clear();
+            ContactPhoneNumber.Clear();
+            ContactAddress.Clear();
+            ContactNotes.Clear();
         }
 
         // Start the clock display
