@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Threading;
 using VendorRad.Models;
 using VendorRad.ViewModels;
@@ -21,67 +22,46 @@ namespace VendorRad
             StartClock();
         }
 
-        private void ToggleContactType_Checked(object sender, RoutedEventArgs e)
+        // Method for saving customer information
+        private void SaveCustomerButton_Click(object sender, RoutedEventArgs e)
         {
-            if (VendorSpecificFields == null)
-                return; // Exit if controls are not initialized
+            var customer = new Customer
+            {
+                Name = CustomerName.Text,
+                Company = CustomerCompany.Text,
+                PhoneNumber = CustomerPhoneNumber.Text,
+                Address = CustomerAddress.Text,
+                SalesNotes = CustomerSalesNotes.Text
+            };
 
-            if (ToggleContactType.IsChecked == true)
-            {
-                ToggleContactType.Content = "Customer";
-                VendorSpecificFields.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                ToggleContactType.Content = "Vendor";
-                VendorSpecificFields.Visibility = Visibility.Visible;
-            }
+            viewModel.AddContact(customer);
+            MessageBox.Show("Customer saved successfully!");
+            ClearCustomerFields();
         }
 
-        // Event handler for saving contact
-        private void SaveContactButton_Click(object sender, RoutedEventArgs e)
+        // Method for saving vendor information
+        private void SaveVendorButton_Click(object sender, RoutedEventArgs e)
         {
-            if (ToggleContactType.IsChecked == true)
+            var masterVendor = VendorCompanyDropdown.SelectedItem as MasterVendor;
+
+            if (masterVendor == null)
             {
-                // Save as Customer
-                var customer = new Customer
-                {
-                    Name = ContactName.Text,
-                    Company = ContactCompany.Text,
-                    PhoneNumber = ContactPhoneNumber.Text,
-                    Address = ContactAddress.Text,
-                    SalesNotes = ContactNotes.Text
-                };
-
-                viewModel.AddContact(customer);
-                MessageBox.Show("Customer saved successfully!");
-                ClearContactFields();
+                MessageBox.Show("Please select a master vendor.");
+                return; // Exit the method if no vendor is selected
             }
-            else
+
+            var vendor = new Vendor
             {
-                var masterVendor = VendorCompanyDropdown.SelectedItem as MasterVendor;
+                Name = VendorName.Text,
+                Company = masterVendor.CompanyName,
+                PhoneNumber = VendorPhoneNumber.Text,
+                Address = VendorAddress.Text,
+                MasterVendor = masterVendor
+            };
 
-                if (masterVendor == null)
-                {
-                    MessageBox.Show("Please select a master vendor.");
-                    return; // Exit the method if no vendor is selected
-                }
-
-                var vendor = new Vendor
-                {
-                    Name = ContactName.Text,
-                    Company = masterVendor.CompanyName,
-                    PhoneNumber = ContactName.Text,
-                    Address = ContactAddress.Text,
-                    MasterVendor = masterVendor
-                };
-
-                viewModel.AddContact(vendor);
-
-                MessageBox.Show("Vendor saved successfully!");
-                ClearContactFields();
-            }
-            MessageBox.Show("Contact saved successfully!");
+            viewModel.AddContact(vendor);
+            MessageBox.Show("Vendor saved successfully!");
+            ClearVendorFields();
         }
 
         private void AddMasterVendorButton_Click(object sender, RoutedEventArgs e)
@@ -107,14 +87,22 @@ namespace VendorRad
             }
         }
 
-        // Clear contact input fields
-        private void ClearContactFields()
+        private void ClearCustomerFields()
         {
-            ContactName.Clear();
-            ContactCompany.Clear();
-            ContactPhoneNumber.Clear();
-            ContactAddress.Clear();
-            ContactNotes.Clear();
+            CustomerName.Clear();
+            CustomerCompany.Clear();
+            CustomerPhoneNumber.Clear();
+            CustomerAddress.Clear();
+            CustomerSalesNotes.Clear();
+        }
+
+        private void ClearVendorFields()
+        {
+            VendorName.Clear();
+            VendorCompanyDropdown.SelectedIndex = -1;
+            VendorCode.Clear();
+            VendorPhoneNumber.Clear();
+            VendorAddress.Clear();
         }
 
         // Start the clock display

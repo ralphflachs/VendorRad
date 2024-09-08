@@ -24,40 +24,40 @@
 
         <!-- Title -->
         <TextBlock Grid.Row="0" Grid.Column="0" Text="VendorRad - Contact Management System" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,20"/>
-       
-        <!-- Toggle Section -->
-        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
-            <ToggleButton Name="ToggleContactType" Width="100" Content="Customer" IsChecked="True" Checked="ToggleContactType_Checked" Unchecked="ToggleContactType_Checked"/>
-        </StackPanel>
 
-        <!-- Unified Contact Details Section -->
-        <GroupBox Grid.Row="1" Header="{Binding Path=IsChecked, ElementName=ToggleContactType, Converter={StaticResource BoolToContactTypeConverter}}" Margin="10">
-            <StackPanel>
-                <Label Content="Name:"/>
-                <TextBox Name="ContactName" Width="300"/>
-
-                <Label Content="Company:"/>
-                <TextBox Name="ContactCompany" Width="300"/>
-
-                <!-- Vendor Specific Fields -->
-                <StackPanel Name="VendorSpecificFields" Visibility="Collapsed">
+        <TabControl Grid.Row="1" Grid.ColumnSpan="1">
+            <TabItem Header="Customer">
+                <StackPanel Margin="10">
+                    <Label Content="Name:"/>
+                    <TextBox x:Name="CustomerName" />
                     <Label Content="Company:"/>
-                    <ComboBox Name="VendorCompanyDropdown" ItemsSource="{Binding MasterVendors}" DisplayMemberPath="CompanyName" />
+                    <TextBox x:Name="CustomerCompany" />
+                    <Label Content="Phone Number:"/>
+                    <TextBox x:Name="CustomerPhoneNumber" />
+                    <Label Content="Address:"/>
+                    <TextBox x:Name="CustomerAddress" />
+                    <Label Content="Sales Notes:"/>
+                    <TextBox x:Name="CustomerSalesNotes"  Height="60" TextWrapping="Wrap"/>
+                    <Button Content="Save Customer" Width="120" Margin="10,10,0,0" Click="SaveCustomerButton_Click"/>
                 </StackPanel>
+            </TabItem>
+            <TabItem Header="Vendor">
+                <StackPanel Margin="10">
+                    <Label Content="Name:"/>
+                    <TextBox x:Name="VendorName" />
+                    <Label Content="Company:"/>
+                    <ComboBox x:Name="VendorCompanyDropdown" DisplayMemberPath="CompanyName" ItemsSource="{Binding MasterVendors}" />
+                    <Label Content="Vendor Code:"/>
+                    <TextBox x:Name="VendorCode" />
+                    <Label Content="Phone Number:"/>
+                    <TextBox x:Name="VendorPhoneNumber" />
+                    <Label Content="Address:"/>
+                    <TextBox x:Name="VendorAddress" />
+                    <Button Content="Save Vendor" Width="120" Margin="10,10,0,0" Click="SaveVendorButton_Click"/>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
 
-                <Label Content="Phone Number:"/>
-                <TextBox Name="ContactPhoneNumber" Width="300"/>
-
-                <Label Content="Address:"/>
-                <TextBox Name="ContactAddress" Width="300"/>
-
-                <Label Content="Notes:"/>
-                <TextBox Name="ContactNotes" Width="300" Height="60" TextWrapping="Wrap"/>
-
-                <Button Content="Save Contact" Name="SaveContactButton" Click="SaveContactButton_Click" Width="120" Margin="10,10,0,0" HorizontalAlignment="Left"/>
-            </StackPanel>
-        </GroupBox>
-        
         <!-- Clock Display -->
         <StackPanel Grid.Row="0"  Grid.Column="1" Grid.ColumnSpan="1" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,0,0">
             <TextBlock Text="Current Time:" FontSize="16"/>
