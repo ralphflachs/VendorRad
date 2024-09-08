@@ -22,15 +22,18 @@ namespace VendorRad.ViewModels
             MasterVendors = new ObservableCollection<MasterVendor>(masterVendorsFromManager);
         }
 
-        // Add contact in the ObservableCollection
+        // Add contact in the ObservableCollection and save it to the file
         public void AddContact(Contact contact)
         {
             Contacts.Add(contact);
             contactManager.SaveContacts([.. Contacts]);
         }
 
+        // Get the master vendor from the master vendor list, null if not found
+        public MasterVendor? GetMasterVendor(string companyName) => MasterVendors.FirstOrDefault(mv => mv.CompanyName == companyName);        
+
         // Add or update a vendor in the ObservableCollection and master vendor list
-        public bool AddVendor(Vendor vendor, string companyName, string vendorCode)
+        public MasterVendor AddVendor(string companyName, string vendorCode)
         {
             // Check if the company exists in the master vendor list
             var masterVendor = MasterVendors.FirstOrDefault(mv => mv.CompanyName == companyName);
@@ -43,14 +46,7 @@ namespace VendorRad.ViewModels
                 contactManager.SaveMasterVendors([.. MasterVendors]);
             }
 
-            // Link the vendor contact to the corresponding MasterVendor
-            vendor.MasterVendor = masterVendor;
-
-            // Add new vendor
-            Contacts.Add(vendor);
-            contactManager.SaveContacts([.. Contacts]);
-
-            return true;
+            return masterVendor;
         }
     }
 }

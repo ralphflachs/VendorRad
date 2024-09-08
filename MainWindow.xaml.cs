@@ -41,27 +41,27 @@ namespace VendorRad
         // Event handler for saving vendor contact
         private void SaveVendorButton_Click(object sender, RoutedEventArgs e)
         {
+            var masterVendor = viewModel.GetMasterVendor(VendorCompany.Text);
+            if (masterVendor == null)
+            {
+                // Manually ask for vendor code, as it needs to be linked with the master vendor list
+                string vendorCode = PromptForVendorCode();
+                masterVendor = viewModel.AddVendor(VendorCompany.Text, vendorCode);
+            }
+
             var vendor = new Vendor
             {
                 Name = VendorName.Text,
                 Company = VendorCompany.Text,
                 PhoneNumber = VendorPhoneNumber.Text,
-                Address = VendorAddress.Text
+                Address = VendorAddress.Text,
+                MasterVendor = masterVendor
             };
 
-            // Manually ask for vendor code, as it needs to be linked with the master vendor list
-            string vendorCode = PromptForVendorCode();
+            viewModel.AddContact(vendor);
 
-            bool success = viewModel.AddVendor(vendor, vendor.Company, vendorCode);
-            if (success)
-            {
-                MessageBox.Show("Vendor saved successfully!");
-                ClearVendorFields();
-            }
-            else
-            {
-                MessageBox.Show("Failed to save vendor. The vendor may already exist.");
-            }
+            MessageBox.Show("Vendor saved successfully!");
+            ClearVendorFields();
         }
 
         // Method to simulate asking for a vendor code (could be done with a dialog in a real app)
