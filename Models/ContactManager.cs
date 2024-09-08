@@ -40,16 +40,26 @@ namespace VendorRad.Models
         }
 
         // Load master vendor list from the file
-        public void LoadMasterVendors()
+        private void LoadMasterVendors()
         {
-            if (!File.Exists(masterVendorFilePath))
+            if (File.Exists(masterVendorFilePath))
             {
-                MasterVendors = new List<MasterVendor>();
-                return;
+                var json = File.ReadAllText(masterVendorFilePath);
+                MasterVendors = JsonSerializer.Deserialize<List<MasterVendor>>(json) ?? [];
             }
-
-            var json = File.ReadAllText(masterVendorFilePath);
-            MasterVendors = JsonSerializer.Deserialize<List<MasterVendor>>(json) ?? new List<MasterVendor>();
+            else
+            {
+                // Initialize with the given master list if file doesn't exist
+                MasterVendors =
+                [
+                    new MasterVendor { CompanyName = "ACME Acids", VendorCode = "A001" },
+                    new MasterVendor { CompanyName = "Berenstain Biology", VendorCode = "A002" },
+                    new MasterVendor { CompanyName = "Flick’s Fluidics", VendorCode = "A003" },
+                    new MasterVendor { CompanyName = "Radical Reagents", VendorCode = "D004" },
+                    new MasterVendor { CompanyName = "BBST Paper Products", VendorCode = "G065" }
+                ];
+                SaveMasterVendors(MasterVendors); // Save the initial list to the file
+            }
         }
 
         // Save master vendors to the file
