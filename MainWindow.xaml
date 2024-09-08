@@ -70,14 +70,26 @@
         </StackPanel>
 
         <!-- Contact List Display -->
-        <GroupBox Grid.Row="2" Grid.ColumnSpan="2" Header="Contacts" Margin="10,10,10,10">
+        <GroupBox Grid.Row="2" Grid.ColumnSpan="1" Header="Contacts" Margin="10,10,10,10">
             <ListView Name="ContactListView" ItemsSource="{Binding Contacts}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="150"/>
-                        <GridViewColumn Header="Company" DisplayMemberBinding="{Binding Company}" Width="150"/>
+                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="100"/>
+                        <GridViewColumn Header="Company" DisplayMemberBinding="{Binding Company}" Width="100"/>
                         <GridViewColumn Header="Phone" DisplayMemberBinding="{Binding PhoneNumber}" Width="100"/>
                         <GridViewColumn Header="Address" DisplayMemberBinding="{Binding Address}" Width="150"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </GroupBox>
+
+        <!-- Master Vendor List Display -->
+        <GroupBox Grid.Row="2" Grid.Column="1" Header="Master Vendors" Margin="10,10,10,10">
+            <ListView Name="MasterVendorListView" ItemsSource="{Binding MasterVendors}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Company Name" DisplayMemberBinding="{Binding CompanyName}" Width="100"/>
+                        <GridViewColumn Header="Vendor Code" DisplayMemberBinding="{Binding VendorCode}" Width="100"/>
                     </GridView>
                 </ListView.View>
             </ListView>
