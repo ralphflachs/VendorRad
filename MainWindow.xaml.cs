@@ -16,16 +16,26 @@ namespace VendorRad
         public MainWindow()
         {
             InitializeComponent();
-            viewModel = new MainViewModel();            
+            viewModel = new MainViewModel();
             timer = new DispatcherTimer();
             DataContext = viewModel; // Set the DataContext to the MainViewModel
-            
+
             StartClock();
         }
 
         // Handler for saving customer information
         private void SaveCustomerButton_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrEmpty(CustomerName.Text) ||
+                string.IsNullOrEmpty(CustomerCompany.Text) ||
+                string.IsNullOrEmpty(CustomerPhoneNumber.Text) ||
+                string.IsNullOrEmpty(CustomerAddress.Text) ||
+                string.IsNullOrEmpty(CustomerSalesNotes.Text))
+            {
+                MessageBox.Show("All fields must be filled out.");
+                return;
+            }
+
             var customer = new Customer
             {
                 Name = CustomerName.Text,
@@ -43,13 +53,16 @@ namespace VendorRad
         // Handler for saving vendor information
         private void SaveVendorButton_Click(object sender, RoutedEventArgs e)
         {
-            var masterVendor = VendorCompanyDropdown.SelectedItem as MasterVendor;
-
-            if (masterVendor == null)
+            if (VendorCompanyDropdown.SelectedItem == null ||
+                string.IsNullOrEmpty(VendorName.Text) ||
+                string.IsNullOrEmpty(VendorPhoneNumber.Text) ||
+                string.IsNullOrEmpty(VendorAddress.Text))
             {
-                MessageBox.Show("Please select a master vendor.");
-                return; // Exit the method if no vendor is selected
+                MessageBox.Show("Please fill out all fields and select a company.");
+                return;
             }
+
+            var masterVendor = VendorCompanyDropdown.SelectedItem as MasterVendor;
 
             var vendor = new Vendor
             {
@@ -71,25 +84,24 @@ namespace VendorRad
             var companyName = NewMasterVendorCompanyName.Text;
             var vendorCode = NewMasterVendorCode.Text;
 
-            if (!string.IsNullOrEmpty(companyName) && !string.IsNullOrEmpty(vendorCode))
+            if (string.IsNullOrEmpty(companyName) || string.IsNullOrEmpty(vendorCode))
             {
-                if (!viewModel.IsMasterVendorExists(companyName))
-                {
-                    viewModel.AddNewMasterVendor(companyName, vendorCode);
-                    MessageBox.Show("New master vendor added successfully!");
-                }
-                else
-                {
-                    MessageBox.Show("Master vendor already exists.");
-                }
+                MessageBox.Show("Both company name and vendor code must be entered.");
+                return;
+            }
+
+            if (!viewModel.IsMasterVendorExists(companyName))
+            {
+                viewModel.AddNewMasterVendor(companyName, vendorCode);
+                MessageBox.Show("New master vendor added successfully!");
             }
             else
             {
-                MessageBox.Show("Please enter both company name and vendor code.");
+                MessageBox.Show("Master vendor already exists.");
             }
         }
 
-        // clear the customer fields
+        // Clear the customer fields
         private void ClearCustomerFields()
         {
             CustomerName.Clear();
@@ -99,7 +111,7 @@ namespace VendorRad
             CustomerSalesNotes.Clear();
         }
 
-        // clear the vendor fields
+        // Clear the vendor fields
         private void ClearVendorFields()
         {
             VendorName.Clear();
