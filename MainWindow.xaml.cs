@@ -16,13 +16,14 @@ namespace VendorRad
         public MainWindow()
         {
             InitializeComponent();
-            viewModel = new MainViewModel();
-            DataContext = viewModel;
+            viewModel = new MainViewModel();            
             timer = new DispatcherTimer();
+            DataContext = viewModel; // Set the DataContext to the MainViewModel
+            
             StartClock();
         }
 
-        // Method for saving customer information
+        // Handler for saving customer information
         private void SaveCustomerButton_Click(object sender, RoutedEventArgs e)
         {
             var customer = new Customer
@@ -39,7 +40,7 @@ namespace VendorRad
             ClearCustomerFields();
         }
 
-        // Method for saving vendor information
+        // Handler for saving vendor information
         private void SaveVendorButton_Click(object sender, RoutedEventArgs e)
         {
             var masterVendor = VendorCompanyDropdown.SelectedItem as MasterVendor;
@@ -64,6 +65,7 @@ namespace VendorRad
             ClearVendorFields();
         }
 
+        // Handler for saving vendor company information
         private void AddMasterVendorButton_Click(object sender, RoutedEventArgs e)
         {
             var companyName = NewMasterVendorCompanyName.Text;
@@ -87,6 +89,7 @@ namespace VendorRad
             }
         }
 
+        // clear the customer fields
         private void ClearCustomerFields()
         {
             CustomerName.Clear();
@@ -96,6 +99,7 @@ namespace VendorRad
             CustomerSalesNotes.Clear();
         }
 
+        // clear the vendor fields
         private void ClearVendorFields()
         {
             VendorName.Clear();
@@ -112,6 +116,7 @@ namespace VendorRad
             timer.Start();
         }
 
+        // Update the clock display
         private void Timer_Tick(object? sender, EventArgs e)
         {
             ClockDisplay.Text = DateTime.Now.ToString("HH:mm:ss");
