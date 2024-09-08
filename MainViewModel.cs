@@ -30,7 +30,7 @@ namespace VendorRad.ViewModels
         }
 
         // Get the master vendor from the master vendor list, null if not found
-        public MasterVendor? GetMasterVendor(string companyName) => MasterVendors.FirstOrDefault(mv => mv.CompanyName == companyName);        
+        public MasterVendor? GetMasterVendor(string companyName) => MasterVendors.FirstOrDefault(mv => mv.CompanyName == companyName);
 
         // Add or update a vendor in the ObservableCollection and master vendor list
         public MasterVendor AddVendor(string companyName, string vendorCode)
@@ -47,6 +47,13 @@ namespace VendorRad.ViewModels
             }
 
             return masterVendor;
+        }
+
+        public void AddNewMasterVendor(string companyName, string vendorCode)
+        {
+            var newMasterVendor = new MasterVendor { CompanyName = companyName, VendorCode = vendorCode };
+            MasterVendors.Add(newMasterVendor);
+            // Optionally, implement saving to a database or service here
         }
     }
 }

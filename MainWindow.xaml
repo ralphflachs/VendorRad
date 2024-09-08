@@ -17,6 +17,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <!-- Title -->
@@ -51,7 +52,7 @@
                 <TextBox Name="VendorName" />
 
                 <Label Content="Company:"/>
-                <TextBox Name="VendorCompany" />
+                <ComboBox Name="VendorCompanyDropdown" ItemsSource="{Binding MasterVendors}" DisplayMemberPath="CompanyName" />
 
                 <Label Content="Phone Number:"/>
                 <TextBox Name="VendorPhoneNumber" />
@@ -81,6 +82,19 @@
                     </GridView>
                 </ListView.View>
             </ListView>
+        </GroupBox>
+
+        <!-- Master Vendor Add Section -->
+        <GroupBox Grid.Row="1" Grid.Column="2" Header="Add New Master Vendor" Margin="0,10,0,10">
+            <StackPanel>
+                <Label Content="Company Name:"/>
+                <TextBox Name="NewMasterVendorCompanyName"/>
+
+                <Label Content="Vendor Code:"/>
+                <TextBox Name="NewMasterVendorCode"/>
+
+                <Button Content="Add Master Vendor" Name="AddMasterVendorButton" Click="AddMasterVendorButton_Click" Width="150" Margin="10,20,0,0"/>
+            </StackPanel>
         </GroupBox>
 
         <!-- Master Vendor List Display -->

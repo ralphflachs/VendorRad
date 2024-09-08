@@ -38,10 +38,27 @@ namespace VendorRad
             ClearCustomerFields();
         }
 
+        private void AddMasterVendorButton_Click(object sender, RoutedEventArgs e)
+        {
+            var companyName = NewMasterVendorCompanyName.Text;
+            var vendorCode = NewMasterVendorCode.Text;
+
+            if (!string.IsNullOrEmpty(companyName) && !string.IsNullOrEmpty(vendorCode))
+            {
+                // Assuming ViewModel method to add new master vendor
+                ((MainViewModel)DataContext).AddNewMasterVendor(companyName, vendorCode);
+                MessageBox.Show("New master vendor added successfully!");
+            }
+            else
+            {
+                MessageBox.Show("Please enter both company name and vendor code.");
+            }
+        }
+
         // Event handler for saving vendor contact
         private void SaveVendorButton_Click(object sender, RoutedEventArgs e)
         {
-            var masterVendor = viewModel.GetMasterVendor(VendorCompany.Text);
+            /*var masterVendor = viewModel.GetMasterVendor(VendorCompany.Text);
             if (masterVendor == null)
             {
                 // Manually ask for vendor code, as it needs to be linked with the master vendor list
@@ -61,7 +78,7 @@ namespace VendorRad
             viewModel.AddContact(vendor);
 
             MessageBox.Show("Vendor saved successfully!");
-            ClearVendorFields();
+            ClearVendorFields();*/
         }
 
         // Method to simulate asking for a vendor code (could be done with a dialog in a real app)
@@ -91,7 +108,7 @@ namespace VendorRad
         private void ClearVendorFields()
         {
             VendorName.Clear();
-            VendorCompany.Clear();
+            //VendorCompany.Clear();
             VendorPhoneNumber.Clear();
             VendorAddress.Clear();
         }
