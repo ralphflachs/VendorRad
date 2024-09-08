@@ -48,16 +48,16 @@
         <GroupBox Grid.Row="1" Grid.Column="1" Header="Vendor Details" Margin="0,10,0,10">
             <StackPanel>
                 <Label Content="Name:"/>
-                <TextBox Name="VendorName" Width="300"/>
+                <TextBox Name="VendorName" />
 
                 <Label Content="Company:"/>
-                <TextBox Name="VendorCompany" Width="300"/>
+                <TextBox Name="VendorCompany" />
 
                 <Label Content="Phone Number:"/>
-                <TextBox Name="VendorPhoneNumber" Width="300"/>
+                <TextBox Name="VendorPhoneNumber" />
 
                 <Label Content="Address:"/>
-                <TextBox Name="VendorAddress" Width="300"/>
+                <TextBox Name="VendorAddress"/>
 
                 <Button Name="SaveVendorButton" Content="Save Vendor" Click="SaveVendorButton_Click" Width="120" Margin="10,10,0,0" HorizontalAlignment="Left"/>
             </StackPanel>
