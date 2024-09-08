@@ -100,7 +100,6 @@ namespace VendorRad
         {
             VendorName.Clear();
             VendorCompanyDropdown.SelectedIndex = -1;
-            VendorCode.Clear();
             VendorPhoneNumber.Clear();
             VendorAddress.Clear();
         }

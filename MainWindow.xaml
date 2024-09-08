@@ -44,8 +44,6 @@
                     <TextBox x:Name="VendorName" />
                     <Label Content="Company:"/>
                     <ComboBox x:Name="VendorCompanyDropdown" DisplayMemberPath="CompanyName" ItemsSource="{Binding MasterVendors}" />
-                    <Label Content="Vendor Code:"/>
-                    <TextBox x:Name="VendorCode" />
                     <Label Content="Phone Number:"/>
                     <TextBox x:Name="VendorPhoneNumber" />
                     <Label Content="Address:"/>
@@ -76,7 +74,7 @@
         </GroupBox>
 
         <!-- Master Vendor Add Section -->
-        <GroupBox Grid.Row="1" Grid.Column="1" Header="Vendor Company" Margin="10,0,0,0"
+        <GroupBox Grid.Row="1" Grid.Column="1" Header="Vendor Company" Width="150" Margin="10,0,0,0"
           HorizontalAlignment="Left" VerticalAlignment="Top">
             <StackPanel>
                 <Label Content="Company Name:"/>
@@ -85,7 +83,7 @@
                 <Label Content="Vendor Code:"/>
                 <TextBox Name="NewMasterVendorCode"/>
 
-                <Button Content="Add Vendor Company" Name="AddMasterVendorButton" Click="AddMasterVendorButton_Click" Width="150" Margin="10,20,0,0"/>
+                <Button Content="Add Company" Name="AddMasterVendorButton" Click="AddMasterVendorButton_Click" Margin="0,20,0,0"/>
             </StackPanel>
         </GroupBox>
 
