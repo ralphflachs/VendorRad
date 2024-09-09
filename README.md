@@ -12,8 +12,8 @@ VendorRad is a Windows Presentation Foundation (WPF) application designed to man
 
 ### Prerequisites
 
-- .NET Framework 4.7.2 or later
-- Visual Studio 2019 or later
+- .NET 8
+- Visual Studio 2022
 
 ### Installation
 
