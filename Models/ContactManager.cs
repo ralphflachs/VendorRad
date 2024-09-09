@@ -30,13 +30,13 @@ namespace VendorRad.Models
                 var initialContacts = new List<Contact>
                 {
                     // Customers
-                    new Customer { Name = "Alice Johnson", Company = "AJ Solutions", PhoneNumber = "+1234567890", Address = "1234 Elm St", SalesNotes = "Important client" },
-                    new Customer { Name = "Bob Smith", Company = "Smith Consulting", PhoneNumber = "+0987654321", Address = "5678 Oak St", SalesNotes = "Prefers email contact" },
-                    new Customer { Name = "Charlie Chaplin", Company = "Chaplin Productions", PhoneNumber = "+1122334455", Address = "910 Pine St", SalesNotes = "Enjoys timely deliveries" },
+                    new Customer { Name = "Alice Johnson", Company = "AJ Solutions", PhoneNumber = "+1234567890", Address = "1234 Elm St", SalesNotes = "Important client",ContactType="Customer" },
+                    new Customer { Name = "Bob Smith", Company = "Smith Consulting", PhoneNumber = "+0987654321", Address = "5678 Oak St", SalesNotes = "Prefers email contact",ContactType="Customer" },
+                    new Customer { Name = "Charlie Chaplin", Company = "Chaplin Productions", PhoneNumber = "+1122334455", Address = "910 Pine St", SalesNotes = "Enjoys timely deliveries",ContactType="Customer" },
                     // Vendors
-                    new Vendor { Name = "Diana Reeves", Company = "ACME Acids", PhoneNumber = "+12025550101", Address = "2345 Maple St", MasterVendor = new MasterVendor { CompanyName = "ACME Acids", VendorCode = "A001" } },
-                    new Vendor { Name = "Evan Wright", Company = "Berenstain Biology", PhoneNumber = "+12025550102", Address = "3456 Birch St", MasterVendor = new MasterVendor { CompanyName = "Berenstain Biology", VendorCode = "A002" } },
-                    new Vendor { Name = "Fiona Graham", Company = "Flick’s Fluidics", PhoneNumber = "+12025550103", Address = "4567 Cedar St", MasterVendor = new MasterVendor { CompanyName = "Flick’s Fluidics", VendorCode = "A003" } }
+                    new Vendor { Name = "Diana Reeves", Company = "ACME Acids", PhoneNumber = "+12025550101", Address = "2345 Maple St", MasterVendor = new MasterVendor { CompanyName = "ACME Acids", VendorCode = "A001" },ContactType="Vendor" },
+                    new Vendor { Name = "Evan Wright", Company = "Berenstain Biology", PhoneNumber = "+12025550102", Address = "3456 Birch St", MasterVendor = new MasterVendor { CompanyName = "Berenstain Biology", VendorCode = "A002" },ContactType="Vendor" },
+                    new Vendor { Name = "Fiona Graham", Company = "Flick’s Fluidics", PhoneNumber = "+12025550103", Address = "4567 Cedar St", MasterVendor = new MasterVendor { CompanyName = "Flick’s Fluidics", VendorCode = "A003" },ContactType="Vendor" }
                 };
 
                 SaveContacts(initialContacts);

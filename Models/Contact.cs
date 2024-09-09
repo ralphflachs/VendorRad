@@ -13,5 +13,6 @@ namespace VendorRad.Models
         public required string Company { get; set; }
         public required string PhoneNumber { get; set; }
         public required string Address { get; set; }
+        public required string ContactType { get; set; }
     }
 }

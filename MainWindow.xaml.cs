@@ -42,7 +42,8 @@ namespace VendorRad
                 Company = CustomerCompany.Text,
                 PhoneNumber = CustomerPhoneNumber.Text,
                 Address = CustomerAddress.Text,
-                SalesNotes = CustomerSalesNotes.Text
+                SalesNotes = CustomerSalesNotes.Text,
+                ContactType = "Customer"
             };
 
             viewModel.AddContact(customer);
@@ -70,7 +71,8 @@ namespace VendorRad
                 Company = masterVendor.CompanyName,
                 PhoneNumber = VendorPhoneNumber.Text,
                 Address = VendorAddress.Text,
-                MasterVendor = masterVendor
+                MasterVendor = masterVendor,
+                ContactType = "Vendor"
             };
 
             viewModel.AddContact(vendor);

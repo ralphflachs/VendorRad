@@ -68,7 +68,8 @@
                         <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="100"/>
                         <GridViewColumn Header="Company" DisplayMemberBinding="{Binding Company}" Width="100"/>
                         <GridViewColumn Header="Phone" DisplayMemberBinding="{Binding PhoneNumber}" Width="100"/>
-                        <GridViewColumn Header="Address" DisplayMemberBinding="{Binding Address}" Width="150"/>
+                        <GridViewColumn Header="Address" DisplayMemberBinding="{Binding Address}" Width="100"/>
+                        <GridViewColumn Header="Type" DisplayMemberBinding="{Binding ContactType}" Width="100"/>
                     </GridView>
                 </ListView.View>
             </ListView>
