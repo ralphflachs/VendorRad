@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace VendorRad.Models
 {
@@ -44,15 +45,12 @@ namespace VendorRad.Models
             }
         }
 
-        // Save contacts to the file
-        public void SaveContacts(List<Contact> contacts)
+        // Save contacts to the file asynchronously
+        public async Task SaveContactsAsync(List<Contact> contacts)
         {
             var json = JsonSerializer.Serialize(contacts, new JsonSerializerOptions { WriteIndented = true });
 
-            lock (contactsFilePath)
-            {
-                File.WriteAllText(contactsFilePath, json);
-            }
+            await File.WriteAllTextAsync(contactsFilePath, json);
         }
 
         // Load master vendor list from the file
@@ -61,32 +59,44 @@ namespace VendorRad.Models
             if (File.Exists(masterVendorFilePath))
             {
                 var json = File.ReadAllText(masterVendorFilePath);
-                MasterVendors = JsonSerializer.Deserialize<List<MasterVendor>>(json) ?? [];
+                MasterVendors = JsonSerializer.Deserialize<List<MasterVendor>>(json) ?? new List<MasterVendor>();
             }
             else
             {
                 // Initialize with the given master list if file doesn't exist
-                MasterVendors =
-                [
+                MasterVendors = new List<MasterVendor>
+                {
                     new MasterVendor { CompanyName = "ACME Acids", VendorCode = "A001" },
                     new MasterVendor { CompanyName = "Berenstain Biology", VendorCode = "A002" },
                     new MasterVendor { CompanyName = "Flick’s Fluidics", VendorCode = "A003" },
                     new MasterVendor { CompanyName = "Radical Reagents", VendorCode = "D004" },
                     new MasterVendor { CompanyName = "BBST Paper Products", VendorCode = "G065" }
-                ];
+                };
                 SaveMasterVendors(MasterVendors); // Save the initial list to the file
             }
         }
 
-        // Save master vendors to the file
+        // Save master vendors to the file asynchronously
+        public async Task SaveMasterVendorsAsync(List<MasterVendor> masterVendors)
+        {
+            var json = JsonSerializer.Serialize(masterVendors, new JsonSerializerOptions { WriteIndented = true });
+
+            await File.WriteAllTextAsync(masterVendorFilePath, json);
+        }
+
+        // Synchronous methods for backward compatibility
+        public void SaveContacts(List<Contact> contacts)
+        {
+            var json = JsonSerializer.Serialize(contacts, new JsonSerializerOptions { WriteIndented = true });
+
+            File.WriteAllText(contactsFilePath, json);
+        }
+
         public void SaveMasterVendors(List<MasterVendor> masterVendors)
         {
             var json = JsonSerializer.Serialize(masterVendors, new JsonSerializerOptions { WriteIndented = true });
 
-            lock (masterVendorFilePath)
-            {
-                File.WriteAllText(masterVendorFilePath, json);
-            }
+            File.WriteAllText(masterVendorFilePath, json);
         }
     }
 }
